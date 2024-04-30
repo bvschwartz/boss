@@ -56,8 +56,8 @@ let board = boardContainer.children[0]
 console.log('board:', board)
 let keyboard = document.getElementById('wordle-app-game').children[1]
 console.log('keyboard:', keyboard)
-let keys = Array.from(keyboard.getElementsByTagName('button'))
-//console.log(keys)
+let keys = document.querySelectorAll('button[data-key]')
+console.log('keys:', keys)
 let letterMap = {}
 // keys on virtual keyboard
 for (let key of keys) {
@@ -65,12 +65,12 @@ for (let key of keys) {
     let letter = key.getAttribute('data-key')
     letterMap[letter] = { target: key }
     key.onclick = function(e) {
-        console.log('onclick:', e.target)
+        //console.log('onclick:', e.target)
     }
     key.addEventListener('click', e => {
-        console.log('click key:', key, 'letter:', letter)
+        //console.log('click key:', key, 'letter:', letter)
         if (key.textContent == 'enter') {
-            updateGuesses(3000)
+            updateGuesses()
         }
         else {
             checkLetter(letter)
@@ -188,10 +188,10 @@ document.addEventListener('keydown', e => {
         //console.log('keydown: special key', e.key)
     }
     else if (e.key == 'Enter') {
-        updateGuesses(3000)
+        updateGuesses()
     }
     else if (e.key.length == 1 && /[a-z]/.test(e.key)) {
-        console.log('keydown:', e.key)
+        //console.log('keydown:', e.key)
         checkLetter(e.key)
     }
 })
