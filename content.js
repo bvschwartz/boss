@@ -70,7 +70,7 @@ for (let key of keys) {
     key.addEventListener('click', e => {
         //console.log('click key:', key, 'letter:', letter)
         if (key.textContent == 'enter') {
-            updateGuesses()
+            updateGuesses(3000)
         }
         else {
             checkLetter(letter)
@@ -84,6 +84,19 @@ let rowTiles = rows.map(row => Array.from(row.childNodes))
 console.log('rowTiles:', rowTiles)
 
 function updateLetterTiles() {
+    console.log("updateLetterTiles")
+    // actual tiles on the board
+    for (let key of keys) {
+        //console.log(key)
+        if (key.getAttribute('data-state') == 'absent') {
+          key.style.opacity = 0
+        }
+        else {
+          key.style.opacity = 1.0
+        }
+    }
+}
+function updateLetterTilesX() {
     // actual tiles on the board
     for (let row of rowTiles) {
         //console.log(row)
@@ -127,15 +140,16 @@ function updateGuessesNow() {
     })
     //console.log('all guesses:', guesses)
     //console.log('current row:', getCurrentRow(guesses))
-    updateLetterTiles()
     findPossibleChoices()
+    updateLetterTiles()
 }
 async function updateGuesses(delay) {
     await sleep(delay)
+    console.log("updateGueess:", delay)
     updateGuessesNow()
 }
 
-updateGuesses(1000)
+updateGuesses(3000)
 currentRow = getCurrentRow(guesses)
 currentCol = getCurrentCol(guesses)
 
@@ -188,7 +202,7 @@ document.addEventListener('keydown', e => {
         //console.log('keydown: special key', e.key)
     }
     else if (e.key == 'Enter') {
-        updateGuesses()
+        updateGuesses(3000)
     }
     else if (e.key.length == 1 && /[a-z]/.test(e.key)) {
         //console.log('keydown:', e.key)
