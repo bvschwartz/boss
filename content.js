@@ -96,37 +96,6 @@ function updateLetterTiles() {
         }
     }
 }
-function updateLetterTilesX() {
-    // actual tiles on the board
-    for (let row of rowTiles) {
-        //console.log(row)
-        let pos = 0
-        for (let tile of row) {
-            //console.log(tile)
-            //tile.style['background-color'] = 'red'
-            let letter = tile.textContent
-            let evaluation = tile.firstChild.getAttribute('data-state')
-            updateLetterMap(letter, evaluation, pos)
-            pos++
-        }
-    }
-}
-
-/*
-function findTile(tile) {
-    let rowNum = 0
-    for (let row of rowTiles) {
-        let index = 0
-        for (let t of row) {
-            if (t == tile) {
-                //console.log('found tile in row', rowNum, 'at', index)
-            }
-            index++
-        }
-        rowNum++
-    }
-}
-*/
 
 function updateGuessesNow() {
     guesses = rowTiles.map((row, rowNum) => {
@@ -149,7 +118,7 @@ async function updateGuesses(delay) {
     updateGuessesNow()
 }
 
-updateGuesses(3000)
+updateGuesses(1000)
 currentRow = getCurrentRow(guesses)
 currentCol = getCurrentCol(guesses)
 
@@ -178,23 +147,6 @@ function getCurrentCol(guesses) {
     }
     console.log('no currentCol')
     return -1
-}
-
-function updateLetterMap(letter, evaluation, position) {
-    let div = letterMap[letter]
-    if (!div) return
-    if (div.correct || div.present) {
-        return
-    }
-    else if (evaluation == 'correct') {
-        div.correct = true
-        div.target.style.opacity = 1.0
-    }
-    else if (evaluation == 'absent') {
-        //console.log('updateLetterMap:', letter, evaluation, position, div)
-        div.present = false
-        div.target.style.opacity = 0
-    }
 }
 
 document.addEventListener('keydown', e => {
